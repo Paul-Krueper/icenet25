@@ -9,53 +9,27 @@ import re
 import argparse
 
 from utils import *
-# #EEm #python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEm.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEm.parquet   
-# --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl
-#  --m1-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__repeatbest_butwithrightiso/INIT/ICEBOOST3D/ICEBOOST3D_549.pkl
-#   --zscore-file /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/zscore.pkl
-
-# #EEp python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEp.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEp.parquet 
-#  --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEp.yml/modeltag__repeatbest_butwithrightiso/beta_0.05__sigma_0.1__lr_0.05__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl 
-#  --m1-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEp.yml/modeltag__repeatbest_butwithrightiso/INIT/ICEBOOST3D/ICEBOOST3D_549.pkl
-#   --zscore-file  /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEp.yml/modeltag__repeatbest_butwithrightiso/beta_0.05__sigma_0.1__lr_0.05__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/zscore.pkl
-
-# #EB python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EB.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EB.parquet  
-# --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EB.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.04375__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl 
-# --m1-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EB.yml/modeltag__repeatbest_butwithrightiso/INIT/ICEBOOST3D/ICEBOOST3D_549.pkl
-#  --zscore-file /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EB.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.04375__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/zscore.pkl
 
 
-
-#previously:
-#EEm #python evaluate.py -i /vols/cms/pfk18/icenet_files/processed/MC_test_EEm.parquet -d  /vols/cms/pfk18/icenet_files/processed/Data_test_EEm.parquet  
-#  --m1-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint_bestEEm/zee/config__tune0_EEm.yml/modeltag__GRIDTUNE/INIT/ICEBOOST3D/ICEBOOST3D_549.pkl 
-#  --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__GRIDTUNE/withinti_Mixedw_beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl 
-#  --zscore-file /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__GRIDTUNE/withinti_Mixedw_beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/zscore.pkl 
-# 
-#EEp python evaluate.py -i /vols/cms/pfk18/icenet_files/processed/MC_test_EEp.parquet -d  /vols/cms/pfk18/icenet_files/processed/Data_test_EEp.parquet 
-#   --m1-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EEp.yml/modeltag__test_EEp-swdbeta0.05-noisereg0.1/test_EEp-swdbeta0.05-noisereg0.1/ICEBOOST3D/ICEBOOST3D_549.pkl 
-#    --m2-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EEp.yml/modeltag__test_EEp-swdbeta0.05-noisereg0.1/test_EEp-swdbeta0.05-noisereg0.1/ICEBOOST-SWD/ICEBOOST-SWD_354.pkl 
-#     --zscore-file /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EEp.yml/modeltag__test_EEp-swdbeta0.05-noisereg0.1/test_EEp-swdbeta0.05-noisereg0.1/zscore.pkl
-# 
-#EB python evaluate.py -i /vols/cms/pfk18/icenet_files/processed/MC_test_EB.parquet -d  /vols/cms/pfk18/icenet_files/processed/Data_test_EB.parquet 
-#   --m1-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EB.yml/modeltag__test_EB-swdbeta0.175-noisereg0.04375/test_EB-swdbeta0.175-noisereg0.04375/ICEBOOST3D/ICEBOOST3D_549.pkl 
-#    --m2-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EB.yml/modeltag__test_EB-swdbeta0.175-noisereg0.04375/test_EB-swdbeta0.175-noisereg0.04375/ICEBOOST-SWD/ICEBOOST-SWD_534.pkl 
-#    --zscore-file /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EB.yml/modeltag__test_EB-swdbeta0.175-noisereg0.04375/test_EB-swdbeta0.175-noisereg0.04375/zscore.pkl
-
+#CALL THIS SCRIPT WITH:
 
 #take m1 and zscore from before (trained on + and -) and take m2 (trained on + only):
 
-#EEm #python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEm.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEm.parquet   
+
+#EEm: 
+#python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEm.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEm.parquet   
 # --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEm.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl
 #--m1-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint_bestEEm_wrongiso/zee/config__tune0_EEm.yml/modeltag__GRIDTUNE/INIT/ICEBOOST3D/ICEBOOST3D_549.pkl 
 #--zscore-file /vols/cms/pfk18/Mikael2/icenet_new/checkpoint_bestEEm_allSWDvars_wrongiso/zee/config__tune0_EEm.yml/modeltag__GRIDTUNE/withinti_Mixedw_beta_0.02__sigma_0.025__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/zscore.pkl 
 
-#EEp python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEp.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEp.parquet 
+#EEp:
+# python evaluate.py -i /vols/cms/pfk18/icenet_files/processed_29_nov_24/MC_test_EEp.parquet -d  /vols/cms/pfk18/icenet_files/processed_29_nov_24/Data_test_EEp.parquet 
 #  --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EEp.yml/modeltag__repeatbest_butwithrightiso/beta_0.05__sigma_0.1__lr_0.05__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl 
 # --m1-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EEp.yml/modeltag__test_EEp-swdbeta0.05-noisereg0.1/test_EEp-swdbeta0.05-noisereg0.1/ICEBOOST3D/ICEBOOST3D_549.pkl 
 # --zscore-file /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EEp.yml/modeltag__test_EEp-swdbeta0.05-noisereg0.1/test_EEp-swdbeta0.05-noisereg0.1/zscore.pkl
 
-#EB python evaluate.py -i /vols/cms/pfk18/Jons_5Apr24_Zmmy_full_DY_postEE_renamed.parquet -d Jons_5Apr24_Zmmy_full_Data_EFG.parquet  /vols/cms/pfk18/
+#EB:
+# python evaluate.py -i /vols/cms/pfk18/Jons_5Apr24_Zmmy_full_DY_postEE_renamed.parquet -d Jons_5Apr24_Zmmy_full_Data_EFG.parquet  /vols/cms/pfk18/
 # --m2-path /vols/cms/pfk18/Mikael2/icenet_new/checkpoint/zee/config__tune0_EB.yml/modeltag__repeatbest_butwithrightiso/beta_0.02__sigma_0.04375__lr_0.1__gamma_1.5__maxdepth_13__lambda_2.0__alpha_0.05/ICEBOOST-SWD/ICEBOOST-SWD_549.pkl 
 #   --m1-path /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EB.yml/modeltag__test_EB-swdbeta0.175-noisereg0.04375/test_EB-swdbeta0.175-noisereg0.04375/ICEBOOST3D/ICEBOOST3D_549.pkl 
 #    --zscore-file /vols/cms/pfk18/Mikael2/icenet/checkpoint2/zee/config__tune0_EB.yml/modeltag__test_EB-swdbeta0.175-noisereg0.04375/test_EB-swdbeta0.175-noisereg0.04375/zscore.pkl
